@@ -1,0 +1,67 @@
+
+
+
+function _apache_list_available_sites() {
+  local DOMAIN
+  local APACHE_ROOT
+  local DOMAINS
+  local LIST
+
+  APACHE_ROOT="/etc/httpd"
+  DOMAIN=${COMP_WORDS[COMP_CWORD]}
+  DOMAINS=$(ls "$APACHE_ROOT/sites-available")
+  LIST=""
+  while read -r LINE
+  do
+    FILENAME=$(basename "$LINE")
+    LIST="$LIST ${FILENAME%\.conf}"
+  done <<< $DOMAINS
+
+  COMPREPLY=( $(compgen -W "$LIST" $DOMAIN ) )
+}
+
+function _apache_list_enabled_sites() {
+  local DOMAIN
+  local APACHE_ROOT
+  local DOMAINS
+  local LIST
+
+  APACHE_ROOT="/etc/httpd"
+  DOMAIN=${COMP_WORDS[COMP_CWORD]}
+  DOMAINS=$(ls "$APACHE_ROOT/sites-enabled")
+  LIST=""
+  while read -r LINE
+  do
+    FILENAME=$(basename "$LINE")
+    LIST="$LIST ${FILENAME%\.conf}"
+  done <<< $DOMAINS
+
+  COMPREPLY=( $(compgen -W "$LIST" $DOMAIN ) )
+}
+
+function _apache_list_disabled_sites() {
+  local DOMAIN
+  local APACHE_ROOT
+  local DOMAINS
+  local LIST
+
+  APACHE_ROOT="/etc/httpd"
+  DOMAIN=${COMP_WORDS[COMP_CWORD]}
+  DOMAINS=$(ls "$APACHE_ROOT/sites-available")
+  LIST=""
+  while read -r LINE
+  do
+    FILENAME=$(basename "$LINE")
+    if [ ! -L "$APACHE_ROOT/sites-enabled/$FILENAME" ]
+    then
+      LIST="$LIST ${FILENAME%\.conf}"
+    fi
+  done <<< $DOMAINS
+
+  COMPREPLY=( $(compgen -W "$LIST" $DOMAIN ) )
+}
+
+
+complete -F _apache_list_disabled_sites aensite
+complete -F _apache_list_enabled_sites adissite
+complete -F _apache_list_available_sites armsite
