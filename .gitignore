@@ -1,0 +1,9 @@
+.local
+__pycache__
+.git
+
+bin/install-berlin.sh
+
+.ovh.ini
+.ovhapi
+configuration.ini

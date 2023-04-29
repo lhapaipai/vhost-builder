@@ -1,0 +1,34 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Config",
+      "type": "python",
+      "request": "launch",
+      "module": "lib.config",
+      "justMyCode": true
+    },
+    {
+      "name": "Test vhost",
+      "type": "python",
+      "request": "launch",
+      "module": "test.vhost-test",
+      "justMyCode": true
+    },
+    {
+      "name": "ovh-alias",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/ovh-alias.py",
+      "args": [
+        "add",
+        "hello.pentatrion.com",
+        "berlin.pentatrion.com"
+      ],
+      "console": "integratedTerminal"
+    }
+  ]
+}

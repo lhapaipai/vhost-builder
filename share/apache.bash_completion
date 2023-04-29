@@ -1,0 +1,33 @@
+
+
+
+function _apache_list_available_sites() {
+    local DOMAIN
+    local APACHE_ROOT
+    local DOMAINS
+    local LIST
+
+    if [ -f "/etc/apache2/httpd.conf" ] || [ -f "/etc/apache2/apache2.conf" ]; then
+        APACHE_ROOT="/etc/apache2"
+    elif [ -f "/etc/httpd/httpd.conf" ]; then
+        APACHE_ROOT="/etc/httpd"
+    elif [ -f "/etc/httpd/conf/httpd.conf" ]; then
+        APACHE_ROOT="/etc/httpd"
+    else
+        echo "Unable to find conf directory." >&2
+        exit 10
+    fi
+
+    DOMAIN=${COMP_WORDS[COMP_CWORD]}
+    DOMAINS=$(ls "$APACHE_ROOT/sites-available")
+    LIST=""
+    while read -r LINE
+    do
+        FILENAME=$(basename "$LINE")
+        LIST="$LIST ${FILENAME%\.conf}"
+    done <<< $DOMAINS
+
+    COMPREPLY=( $(compgen -W "$LIST" $DOMAIN ) )
+}
+
+complete -F _apache_list_available_sites a2rmsite
