@@ -15,6 +15,7 @@ install-arch:
 	ln -f -s /opt/vhost-builder/a2dissite.py /usr/local/bin/a2dissite
 
 install-credentials:
+	mkdir /etc/ovh
 	cp ./.ovh.ini /etc/ovh/.ovh.ini
 	cp ./.ovhapi /etc/ovh/.ovhapi
 	chown -R root:root /etc/ovh
