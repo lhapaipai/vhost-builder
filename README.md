@@ -17,11 +17,21 @@ cp configuration.dist.ini configuration.ini
 
 # lancer la copie des fichiers
 sudo make install
+
+# penser à donner les droits de traverser les dossiers de votre dossier perso si vous comptez créer des vhosts dans celui-ci
+chmod a+x /home/<user>
 ```
 
 ### Https local
 
 `a2mksite` utilise `mkcert` pour générer des certificats SSL en local, voir l'installation ici : [mkcert](https://github.com/FiloSottile/mkcert)
+
+créer le dossier pour réceptionner les certificats et lui donner les droits de l'utilisateur courant
+
+```
+mkdir /etc/apache2/certs
+chown <user>:<user> /etc/apache2/certs
+```
 
 ### Https sur votre serveur avec Certbot
 
